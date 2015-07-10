@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Acceleration Example</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8">
+	
+	var watchID;
+    // Wait for device API libraries to load
+    //
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    // device APIs are available
+    //
+    function onDeviceReady() {
+        watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError,{frequency:500});
+    }
+
+    // onSuccess: Get a snapshot of the current acceleration
+    //
+    function onSuccess(acceleration) {
+        document.getElementById("output").innerHTML = 'Acceleration X: ' + acceleration.x + '\n' +
+              'Acceleration Y: ' + acceleration.y + '\n' +
+              'Acceleration Z: ' + acceleration.z + '\n' +
+              'Timestamp: '      + acceleration.timestamp + '\n';
+    }
+
+    // onError: Failed to get the acceleration
+    //
+    function onError() {
+        alert('onError!');
+    }
+	
+	function stopTracking()
+	{
+		navigator.accelerometer.clearWatch(watchID);
+	}
+    </script>
+  </head>
+  <body>
+  	<input type="button" onclick="stopTracking()" value="Refresh" />
+    <h1>Example</h1>
+    <p id="output">getCurrentAcceleration</p>
+  </body>
+</html>
